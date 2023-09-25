@@ -26,6 +26,8 @@ const feathers = [
 
 function PictureDisplay ({ size, featherCount, featherColors }) {
   const [customClassName, setCustomClassName] = useState("medium");
+  const [colors, setColors] = useState([]);
+
   useEffect(() => {
     console.log('PictureDisplay', size, featherCount, featherColors);
   }, [featherColors, featherCount, size]);
@@ -43,11 +45,14 @@ function PictureDisplay ({ size, featherCount, featherColors }) {
   }, [size]);
 
   // TODO: Wrap in useEffect
-  const colors = [];
-  if (!featherColors || featherColors.length === 0) featherColors = [''];
-  for (let i=0; i<featherCount; i++) {
-    colors.push(featherColors[i % featherColors.length]);
-  }
+  useEffect(() => {
+    const colors = [];
+    if (!featherColors || featherColors.length === 0) featherColors = [''];
+    for (let i=0; i<featherCount; i++) {
+      colors.push(featherColors[i % featherColors.length]);
+    }
+    setColors(colors);
+  }, [featherColors])
 
   return (
     <div className={`image-area ${customClassName}`}>
